@@ -1,9 +1,55 @@
 import React, {useState} from 'react'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { useNavigate } from 'react-router-dom'
+
 import FloatingLabelInput from '../../components/FloatingLabelInput'
+import Alert from '../../components/Alert'
+import Loader from '../../components/Loader'
+
+
+const signInSchema = Yup.object().shape({
+  username: Yup.string()
+  .required('Debe ingresar un nombre de usuario')
+  .min(8, 'El mínimo es de 8 caracteres')
+  .max(16, 'El máximo es 16 caracteres'),
+  password: Yup.string()
+  .required('Debe ingresar una contraseña')
+  .min(8, 'El mínimo es de 8 caracteres')
+})
 
 const SignIn = () => {
+  const navigate = useNavigate()
+  
+  const [serverResponse, setServerResponse] = useState(null)
 
-  const [errors, setErrors] = useState(true)
+  const handleFeedback = (errors, touched, name) => {
+    if(!touched[name]) return null
+    if(!errors[name]) return {valid: true, message: 'aceptable'}
+    return {valid: false, message: errors[name]}
+  }
+  
+  const handleSubmit = async (values) => {
+    const response = await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(values)
+    })
+    if(response.ok){
+      navigate('/')
+    }
+
+    const data = await response.json()
+
+    setServerResponse(data)
+  }
 
   return (
     <div className='container'>
@@ -12,23 +58,52 @@ const SignIn = () => {
           <div className="card mt-5">
             <div className="card-body">
               <h2 className='card-title text-center mb-3'>Iniciar sesión</h2>
-              <form>
-                <FloatingLabelInput 
-                  type='text'
-                  name='username'
-                  placeholder='johndoe'
-                  labelText='nombre de usuario'
-                />
-                <FloatingLabelInput 
-                  type='password'
-                  name='password'
-                  placeholder='1234'
-                  labelText='contraseña'
-                />
-                <div className='d-grid'>
-                  <button type='button' className='btn btn-primary'>Enviar</button>
-                </div>
-              </form>
+              <Formik
+                initialValues={{username: '', password: ''}}
+                validationSchema={signInSchema}
+                onSubmit={handleSubmit}
+              >
+                {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
+                  <form onSubmit={handleSubmit}>
+                    <FloatingLabelInput
+                      type='text'
+                      name='username'
+                      placeholder='johndoe'
+                      labelText='nombre de usuario'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.username}
+                      feedback={handleFeedback(errors, touched, 'username')}
+                    />
+                    <FloatingLabelInput 
+                      type='password'
+                      name='password'
+                      placeholder='1234'
+                      labelText='contraseña'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      feedback={handleFeedback(errors, touched, 'password')}
+                    />
+                    {
+                      !isSubmitting ? 
+                      <div className='d-grid'>
+                        <button 
+                          type='submit' 
+                          className='btn btn-primary' 
+                          disabled={
+                            errors.username || errors.password || !values.username || !values.password
+                          }
+                        >
+                          Enviar
+                        </button>
+                      </div> :
+                      <Loader />
+                    }
+                    {serverResponse && !isSubmitting && <Alert message={serverResponse.message} type={serverResponse.type}/>}
+                  </form>
+                )}
+              </Formik>
             </div>
           </div>
         </div>

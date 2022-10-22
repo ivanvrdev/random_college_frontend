@@ -1,14 +1,41 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
-const FloatingLabelInput = ({labelText, ...restOfProps}) => {
+
+const defaultClassname = 'form-control'
+
+const FloatingLabelInput = ({labelText, feedback, ...restOfProps}) => {
+
+  const [inputClassname, setInputClassname] = useState(defaultClassname)
+
+  useEffect(()=>{
+    if(!feedback){
+      setInputClassname(defaultClassname)
+      return
+    }
+
+    if(!feedback.valid){
+      setInputClassname(defaultClassname + ' is-invalid')
+      return
+    }
+
+    setInputClassname(defaultClassname + ' is-valid')
+
+  }, [feedback])
+
   return (
     <div className="mb-3">
-        <div class="form-floating">
-            <input class="form-control is-valid" {...restOfProps}/>
-            <label for="floatingInput">{labelText}</label>
-        </div>
-        <div className="valid-feedback">
-            hola
+        <div className="form-floating">
+          <input 
+            className={inputClassname} 
+            {...restOfProps}
+          />
+          <label htmlFor="floatingInput">{labelText}</label>
+          {
+            feedback &&
+            <div className={feedback.valid ? "valid-feedback" : "invalid-feedback"}>
+              {feedback.message}
+            </div>
+          }
         </div>
     </div>
   )
