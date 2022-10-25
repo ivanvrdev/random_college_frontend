@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { signOut } from '../redux/userSlice'
 
 const NavItemSesion = () => {
-
-    const { token, user } = useSelector(state => state.user)
+    
+    const dispatch = useDispatch()
+    
+    const { token, ...user } = useSelector(state => state.user)
+    
+    const handleSignOut = () => dispatch(signOut())
 
     if(!token){
         return (
@@ -24,7 +30,7 @@ const NavItemSesion = () => {
                     <li><a className="dropdown-item" href="#">Action</a></li>
                     <li><a className="dropdown-item" href="#">Another action</a></li>
                     <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li><a className="dropdown-item" href="#" onClick={handleSignOut}>Cerrar sesión</a></li>
                 </ul>
             </div>
         </div>
@@ -67,6 +73,8 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <NavItem path='/' name='Inicio'/>
+                    <NavItem path='/subjects' name='Materias'/>
+                    <NavItem path='/signUp' name='Crear usuario'/>
                 </ul>
                 <NavItemSesion />
             </div>

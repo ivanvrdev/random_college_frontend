@@ -53,7 +53,7 @@ const SignIn = () => {
 
       const { user, token } = data
 
-      dispatch(signIn({user, token}))
+      dispatch(signIn({...user, token}))
 
       navigate('/')
     }

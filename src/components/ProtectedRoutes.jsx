@@ -1,12 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, Navigate } from "react-router-dom"
 
 const ProtectedRoutes = ({condition, redirectTo = '/signIn', children}) => {
     
-    const navigate = useNavigate()
-    
-    if(!condition){
-        navigate(redirectTo)
-    }
+    if(!condition) return <Navigate to={redirectTo}/>
 
     return children || <Outlet/>
 }
