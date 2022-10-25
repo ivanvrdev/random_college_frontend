@@ -1,5 +1,60 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+const NavItemSesion = () => {
+
+    const { token, user } = useSelector(state => state.user)
+
+    if(!token){
+        return (
+            <div className="nav-item">
+                <Link to='/signIn' className='nav-link'>Iniciar sesión</Link>
+            </div>                
+        )
+    }
+
+    return (
+        <div className="navbar-nav mb-lg-0 pe-5">
+            <div className="nav-item dropdown pe-5">
+                <a className="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {user.username}
+                </a>
+                <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#">Action</a></li>
+                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    )
+}
+
+const NavItem = ({path, name}) => {
+
+    const location = useLocation()
+
+    const [isActive, setIsActive] = useState(false)
+
+    useEffect(()=>{
+
+        if(location.pathname !== path) {
+            setIsActive(false)
+            return
+        }
+
+        setIsActive(true)
+    }, [location])
+
+    return (
+        <li className='nav-item'>
+            <Link to={path} className={'nav-link' + (isActive ? ' active' : '')}>
+                {name}
+            </Link>
+        </li>
+    )
+}
 
 const Navbar = () => {
   return (
@@ -11,31 +66,9 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                        </a>
-                        <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                        <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link disabled">Disabled</a>
-                    </li>
+                    <NavItem path='/' name='Inicio'/>
                 </ul>
-                <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <NavItemSesion />
             </div>
         </div>
     </nav>

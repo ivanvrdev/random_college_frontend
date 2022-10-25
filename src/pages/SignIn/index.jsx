@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+
+import { signIn } from '../../redux/userSlice'
 
 import FloatingLabelInput from '../../components/FloatingLabelInput'
 import Alert from '../../components/Alert'
@@ -20,6 +23,7 @@ const signInSchema = Yup.object().shape({
 
 const SignIn = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   
   const [serverResponse, setServerResponse] = useState(null)
 
@@ -42,11 +46,17 @@ const SignIn = () => {
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(values)
     })
+    
+    const data = await response.json()
+    
     if(response.ok){
+
+      const { user, token } = data
+
+      dispatch(signIn({user, token}))
+
       navigate('/')
     }
-
-    const data = await response.json()
 
     setServerResponse(data)
   }
@@ -98,7 +108,9 @@ const SignIn = () => {
                           Enviar
                         </button>
                       </div> :
-                      <Loader />
+                      <div className="row justify-content-center">
+                        <Loader />
+                      </div>
                     }
                     {serverResponse && !isSubmitting && <Alert message={serverResponse.message} type={serverResponse.type}/>}
                   </form>
