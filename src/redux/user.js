@@ -7,11 +7,11 @@ const userReducer = (state = initialState, action) => {
     const { type, payload } = action
 
     const actions = {
-        'SIGN_IN': () => payload,
-        'SIGN_OUT': () => initialState
+        'SIGN_IN': ({...state, ...payload}),
+        'SIGN_OUT': initialState
     }
-
-    return actions[type]
+    
+    return actions[type] || initialState
 }
 
 export default userReducer

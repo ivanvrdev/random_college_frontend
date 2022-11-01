@@ -1,12 +1,10 @@
 import { createStore, combineReducers } from "redux"
-import user from './user'
+import userReducer from './user'
 
 const reducers = combineReducers({
-    user
+    user: userReducer
 })
 
-const store = createStore({
-    reducers
-})
+const store = createStore(reducers)
 
 export default store

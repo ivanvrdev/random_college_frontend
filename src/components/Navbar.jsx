@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
-import { signOut } from '../redux/userSlice'
-
-const NavItemSesion = () => {
-    
-    const dispatch = useDispatch()
-    
-    const { token, ...user } = useSelector(state => state.user)
-    
-    const handleSignOut = () => dispatch(signOut())
-
+const VisualNavItemSesion = ({token, user, handleSignOut}) => {
     if(!token){
         return (
             <div className="nav-item">
@@ -30,12 +21,36 @@ const NavItemSesion = () => {
                     <li><a className="dropdown-item" href="#">Action</a></li>
                     <li><a className="dropdown-item" href="#">Another action</a></li>
                     <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item" href="#" onClick={handleSignOut}>Cerrar sesión</a></li>
+                    <li>
+                        <a 
+                            className="dropdown-item" 
+                            href="#"
+                            onClick={()=>handleSignOut()}
+                        >
+                            Cerrar sesión
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     )
 }
+
+const mapStateToProps = state => {
+    const {token, data} = state.user
+    return { token, user: data }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        handleSignOut: () => dispatch({type: 'SIGN_OUT'})
+    }
+}
+
+const NavItemSesion = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(VisualNavItemSesion)
 
 const NavItem = ({path, name}) => {
 
@@ -63,7 +78,7 @@ const NavItem = ({path, name}) => {
 }
 
 const Navbar = () => {
-  return (
+    return (
     <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
             <Link className="navbar-brand" to='/'>Instituto Random</Link>
@@ -76,11 +91,11 @@ const Navbar = () => {
                     <NavItem path='/subjects' name='Materias'/>
                     <NavItem path='/signUp' name='Crear usuario'/>
                 </ul>
-                <NavItemSesion />
+                <NavItemSesion/>
             </div>
         </div>
     </nav>
   )
 }
 
-export default Navbar
+export default Navbar 

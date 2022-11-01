@@ -1,10 +1,9 @@
-// import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   BrowserRouter,
   Routes,
   Route
 } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 import Home from './pages/Home'
 import SignIn from './pages/SignIn'
@@ -14,9 +13,15 @@ import Subjects from './pages/Subjects'
 import Navbar from './components/Navbar'
 import ProtectedRoutes from './components/ProtectedRoutes'
 
+import store from './redux/store'
+
 const Router = () => {
 
-  const { token } = useSelector(state => state.user)
+  const [token, setToken] = useState(null)
+
+  store.subscribe(()=>{
+    setToken(store.getState().user.token)
+  })
 
   return (
     <Routes>

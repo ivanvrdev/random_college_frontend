@@ -2,24 +2,21 @@ import React, {useState} from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-
-import { signIn } from '../../redux/userSlice'
+import { connect } from 'react-redux'
 
 import FloatingLabelInput from '../../components/FloatingLabelInput'
 import Alert from '../../components/Alert'
 import Loader from '../../components/Loader'
 
 const signInSchema = Yup.object().shape({
-  username: Yup.string()
+username: Yup.string()
   .required('Debe ingresar un nombre de usuario'),
   password: Yup.string()
   .required('Debe ingresar una contraseña')
 })
 
-const SignIn = () => {
+const SignIn = ({dispatch}) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   
   const [serverResponse, setServerResponse] = useState(null)
 
@@ -48,8 +45,8 @@ const SignIn = () => {
     if(response.ok){
 
       const { user, token } = data
-
-      dispatch(signIn({...user, token}))
+      // console.log(data)
+      dispatch({type: 'SIGN_IN', payload: {token, data: user}})
 
       navigate('/')
     }
@@ -120,4 +117,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default connect()(SignIn)
