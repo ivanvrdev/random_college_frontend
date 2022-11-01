@@ -10,15 +10,11 @@ import FloatingLabelInput from '../../components/FloatingLabelInput'
 import Alert from '../../components/Alert'
 import Loader from '../../components/Loader'
 
-
 const signInSchema = Yup.object().shape({
   username: Yup.string()
-  .required('Debe ingresar un nombre de usuario')
-  .min(8, 'El mínimo es de 8 caracteres')
-  .max(16, 'El máximo es 16 caracteres'),
+  .required('Debe ingresar un nombre de usuario'),
   password: Yup.string()
   .required('Debe ingresar una contraseña')
-  .min(8, 'El mínimo es de 8 caracteres')
 })
 
 const SignIn = () => {
@@ -29,7 +25,7 @@ const SignIn = () => {
 
   const handleFeedback = (errors, touched, name) => {
     if(!touched[name]) return null
-    if(!errors[name]) return {valid: true, message: 'aceptable'}
+    if(!errors[name]) return null
     return {valid: false, message: errors[name]}
   }
   
@@ -102,7 +98,7 @@ const SignIn = () => {
                           type='submit' 
                           className='btn btn-primary' 
                           disabled={
-                            errors.username || errors.password || !values.username || !values.password
+                            !values.username || !values.password
                           }
                         >
                           Enviar
