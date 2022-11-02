@@ -27,31 +27,35 @@ const SignIn = ({dispatch}) => {
   }
   
   const handleSubmit = async (values) => {
-    const response = await fetch('http://localhost:4000/login', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(values)
-    })
-    
-    const data = await response.json()
-    
-    if(response.ok){
-
-      const { user, token } = data
-      // console.log(data)
-      dispatch({type: 'SIGN_IN', payload: {token, data: user}})
-
-      navigate('/')
+    try{
+      const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(values)
+      })
+      
+      const data = await response.json()
+      
+      if(response.ok){
+  
+        const { user, token } = data
+        // console.log(data)
+        dispatch({type: 'SIGN_IN', payload: {token, data: user}})
+  
+        navigate('/')
+      }
+  
+      setServerResponse(data)
+    } catch(error) {
+      setServerResponse({message: '¡Ups! Ha ocurrido un error...', type: 'danger'})
     }
-
-    setServerResponse(data)
   }
 
   return (

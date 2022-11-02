@@ -7,10 +7,11 @@ import {
 
 import Home from './pages/Home'
 import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
 import Subjects from './pages/Subjects'
+import Dashboard from './pages/dashboard'
+import Degrees from './pages/Degrees'
 
-import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 import ProtectedRoutes from './components/ProtectedRoutes'
 
 import store from './redux/store'
@@ -29,8 +30,9 @@ const Router = () => {
       <Route path='/signIn' element={<SignIn />} />
       <Route path='*' element={<h1>Página 404</h1>}/>
       <Route element={<ProtectedRoutes condition={token} /> }>
-        <Route path='/signUp' element={<SignUp />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/subjects' element={<Subjects />} />
+        <Route path='/degrees' element={<Degrees />} />
       </Route>
     </Routes>
   )
@@ -39,8 +41,10 @@ const Router = () => {
 function App() {
   return (
     <BrowserRouter>
-      <Navbar /> 
-      <Router />
+      <div className="d-flex">
+        <Sidebar />
+        <Router />
+      </div>
     </BrowserRouter>
   )
 }
