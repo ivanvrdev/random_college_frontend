@@ -1,14 +1,14 @@
-export const OffCanvasButton = () => (
-  <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-    Link with href
+export const OffCanvasToggler = () => (
+  <a className="navbar-toggler" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+    <span className="navbar-toggler-icon"></span>
   </a>
 )
 
 export const OffCanvas = () => {
   return (
     <div 
-      className="offcanvas offcanvas-end" 
-      tabindex="-1" id="offcanvasExample" 
+      className="offcanvas offcanvas-start" 
+      tabIndex="-1" id="offcanvasExample" 
       aria-labelledby="offcanvasExampleLabel"
       data-bs-scroll="true"
       aria-controls="offcanvasScrolling"
