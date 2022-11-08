@@ -21,9 +21,17 @@ const SessionSidebar = ({token, user, dispatch}) => {
       <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
         <li><a className="dropdown-item" href="#">New project...</a></li>
         <li><a className="dropdown-item" href="#">Settings</a></li>
-        <li><a className="dropdown-item" href="#">Profile</a></li>
+        <li><Link className="dropdown-item" to="/profile">Mi perfil</Link></li>
         <li><hr className="dropdown-divider" /></li>
-        <li onClick={()=>dispatch({type: 'SIGN_OUT'})}><a className="dropdown-item" href="#">Sign out</a></li>
+        <li 
+          className="dropdown-item" 
+          onClick={()=>{
+            localStorage.removeItem('token')
+            dispatch({type: 'SIGN_OUT'})
+          }}
+        >
+          Cerrar sesión
+        </li>
       </ul>
     </div>
   )
@@ -31,7 +39,6 @@ const SessionSidebar = ({token, user, dispatch}) => {
 
 const mapStateToProps = (state) =>{
   const {token, data} = state.user
-  console.log(token)
   return {token, user: data}
 }
 

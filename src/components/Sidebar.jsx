@@ -39,7 +39,7 @@ const Sidebar = () => {
         <Item path='/' name='Inicio'/>
         <Item path='/subjects' name='Materias'/>
         <Item path='/degrees' name='Carreras'/>
-        <Item path='/dashboard' name='Administración'/>
+        <Item path='/admin' name='Administración'/>
       </ul>
       <hr />
       <SessionSidebar />

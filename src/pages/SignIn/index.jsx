@@ -28,7 +28,7 @@ const SignIn = ({dispatch}) => {
   
   const handleSubmit = async (values) => {
     try{
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch('http://localhost:4000/auth/login', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -46,9 +46,9 @@ const SignIn = ({dispatch}) => {
       if(response.ok){
   
         const { user, token } = data
-        // console.log(data)
         dispatch({type: 'SIGN_IN', payload: {token, data: user}})
-  
+        localStorage.setItem('token', token)
+
         navigate('/')
       }
   
