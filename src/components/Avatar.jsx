@@ -9,7 +9,6 @@ const Avatar = ({...restOfProps}) => {
       className="rounded-circle m-1" 
       width={30} 
       height={30}
-      style={{cursor: 'pointer'}}
       {...restOfProps}
     />
   )

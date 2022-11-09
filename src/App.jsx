@@ -1,5 +1,7 @@
+import Banner from "./components/Banner"
 import Navbar from "./components/Navbar"
 import { OffCanvas } from "./components/OffCanvas"
+import PostInput from "./components/PostInput"
 
 function App() {
   return (
@@ -8,7 +10,8 @@ function App() {
       <Navbar />
       <OffCanvas />
       <div className="container">
-        <img src="https://gstatic.com/classroom/themes/Honors.jpg" alt="" />
+        <Banner />
+        <PostInput />
       </div>
     </div>
   )
