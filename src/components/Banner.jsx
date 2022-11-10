@@ -3,7 +3,7 @@ import "../styles/banner.css"
 
 const Banner = () => {
   return (
-    <div className='my-4 w-100 banner-container'>
+    <div className='mb-2 w-100 banner-container'>
       <img 
         src="https://gstatic.com/classroom/themes/Honors.jpg" 
         alt=""
