@@ -1,27 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/banner.css'
 
 const Card = ({header, subHeader, image, path}) => {
   return (
-    <div className="col-lg-6 col-md-12">
-      <div className='card m-1'>
+    <div className="col-lg-3 col-md-6 col-sm-12">
+      <div className='card'>
         <Link to={path} className='text-decoration-none text-reset'>
-          <div className="d-flex">
+          <div className="banner-container">
             <img 
               src={image} 
-              alt={header} 
-              className='rounded-circle m-3' 
-              width={100} 
-              height={100}
+              alt={header}
+              className="w-100"
             />
-            <div className="mt-3">
-              <p className="fs-3">
-                {header}
-              </p>
-              <p className="fs-5">
-                {subHeader}
-              </p>
+            <div className="banner-text">
+              <p>Hola</p>
             </div>
+          </div>
+          <div className="card-body">
+            <p className="fs-3">
+              {header}
+            </p>
+            <p className="fs-5">
+              {subHeader}
+            </p>
           </div>
         </Link>
       </div>

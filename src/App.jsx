@@ -6,29 +6,30 @@ import {
 } from 'react-router-dom'
 
 import Home from './pages/Home'
-import SignIn from './pages/SignIn'
 import Subjects from './pages/Subjects'
 import Admin from './pages/Admin'
 import Degrees from './pages/Degrees'
 import Profile from './pages/Profile'
+import Login from './pages/Login'
 
-import Sidebar from './components/Sidebar'
 import ProtectedRoutes from './components/ProtectedRoutes'
+import Navbar from './components/Navbar'
 
 import store from './redux/store'
+import { OffCanvas } from './components/OffCanvas'
 
 const Router = () => {
 
   const [token, setToken] = useState(null)
 
   store.subscribe(()=>{
-    setToken(store.getState().user.token)
+    setToken(store.getState().session.token)
   })
 
   return (
     <Routes>
       <Route path='/' element={<Home />}/>
-      <Route path='/signIn' element={<SignIn />} />
+      <Route path='/login' element={<Login />} />
       <Route path='*' element={<h1>Página 404</h1>}/>
       <Route element={<ProtectedRoutes condition={token} /> }>
         <Route path='/admin' element={<Admin />}/>
@@ -61,15 +62,14 @@ function App() {
         body: JSON.stringify({token})
     })
     .then(response => response.json())
-    .then(data => store.dispatch({type: 'SIGN_IN', payload: {token, data: data.user}}))
+    .then(data => store.dispatch({type: 'LOG_IN', payload: {token, user: data.user}}))
   }, [])
 
   return (
     <BrowserRouter>
-      <div className="d-flex">
-        <Sidebar />
-        <Router />
-      </div>
+      <Navbar />
+      <OffCanvas />
+      <Router />
     </BrowserRouter>
   )
 }

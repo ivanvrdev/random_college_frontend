@@ -15,7 +15,7 @@ username: Yup.string()
   .required('Debe ingresar una contraseña')
 })
 
-const SignIn = ({dispatch}) => {
+const Login = ({dispatch}) => {
   const navigate = useNavigate()
   
   const [serverResponse, setServerResponse] = useState(null)
@@ -46,7 +46,7 @@ const SignIn = ({dispatch}) => {
       if(response.ok){
   
         const { user, token } = data
-        dispatch({type: 'SIGN_IN', payload: {token, data: user}})
+        dispatch({type: 'LOG_IN', payload: {token, user}})
         localStorage.setItem('token', token)
 
         navigate('/')
@@ -59,10 +59,10 @@ const SignIn = ({dispatch}) => {
   }
 
   return (
-    <div className='container'>
-      <div className="row justify-content-center">
+    <div className='container' style={{height: '100vh'}}>
+      <div className="row h-100 justify-content-center align-items-center">
         <div className="col-lg-6 col-md-9 col-sm-12 ">
-          <div className="card mt-5">
+          <div className="card">
             <div className="card-body">
               <h2 className='card-title text-center mb-3'>Iniciar sesión</h2>
               <Formik
@@ -121,4 +121,4 @@ const SignIn = ({dispatch}) => {
   )
 }
 
-export default connect()(SignIn)
+export default connect()(Login)
