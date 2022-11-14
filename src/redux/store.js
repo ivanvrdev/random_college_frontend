@@ -1,10 +1,14 @@
-import { createStore, combineReducers } from "redux"
-import sessionReducer from './session'
+import { createStore, applyMiddleware } from "redux"
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
-const reducers = combineReducers({
-    session: sessionReducer
-})
+import reducers from "./reducers"
 
-const store = createStore(reducers)
+const middleware = [thunk]
+
+const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(...middleware))
+)
 
 export default store

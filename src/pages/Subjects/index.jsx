@@ -1,18 +1,33 @@
 import React from 'react'
-import Card from '../../components/Card'
+import Subject from '../../components/Subject'
 
 const Subjects = () => {
   return (
-    <div className='container' style={{marginTop: 80}}>
-      <div className="row">
-        <Card 
-          header={'hola'} 
-          subHeader={'hola'} 
-          path={'/'} 
-          image={'https://gstatic.com/classroom/themes/Honors.jpg'}
-        />
-
-      </div>
+    <div className="row">
+      <Subject 
+        header={'hola'} 
+        subHeader={'hola'} 
+        path={'/'} 
+        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
+      />
+      <Subject 
+        header={'hola'} 
+        subHeader={'hola'} 
+        path={'/'} 
+        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
+      />
+      <Subject 
+        header={'hola'} 
+        subHeader={'hola'} 
+        path={'/'} 
+        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
+      />
+      <Subject 
+        header={'hola'} 
+        subHeader={'hola'} 
+        path={'/'} 
+        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
+      />
     </div>
   )
 }

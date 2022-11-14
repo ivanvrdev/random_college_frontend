@@ -1,10 +1,27 @@
 .banner-container {
   position: relative;
   display: inline-block;
-  margin-top: 80px;
 }
 
 .banner-text {
   position: absolute;
   bottom: 0;
+}
+
+.card-banner {
+  height: 100px;
+}
+
+.card-avatar {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  right: 15px;
+  bottom: 0;
+}
+
+.card-avatar-container {
+  height: 135px;
+  position: relative;
+  display: inline-block;
 }

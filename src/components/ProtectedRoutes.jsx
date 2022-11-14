@@ -2,9 +2,9 @@ import { Outlet, Navigate } from "react-router-dom"
 
 const ProtectedRoutes = ({condition, redirectTo = '/login', children}) => {
     
-    if(!condition) return <Navigate to={redirectTo}/>
+  if(!condition) return <Navigate to={redirectTo}/>
 
-    return children || <Outlet/>
+  return children || <Outlet/>
 }
 
 export default ProtectedRoutes

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useEffect} from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,8 @@ import FloatingLabelInput from '../../components/FloatingLabelInput'
 import Alert from '../../components/Alert'
 import Loader from '../../components/Loader'
 
+import { login } from '../../redux/actions/session'
+
 const signInSchema = Yup.object().shape({
 username: Yup.string()
   .required('Debe ingresar un nombre de usuario'),
@@ -15,51 +17,22 @@ username: Yup.string()
   .required('Debe ingresar una contraseña')
 })
 
-const Login = ({dispatch}) => {
+const Login = ({previusLocation, auth, authError, login}) => {
   const navigate = useNavigate()
-  
-  const [serverResponse, setServerResponse] = useState(null)
 
   const handleFeedback = (errors, touched, name) => {
     if(!touched[name]) return null
     if(!errors[name]) return null
     return {valid: false, message: errors[name]}
   }
-  
-  const handleSubmit = async (values) => {
-    try{
-      const response = await fetch('http://localhost:4000/auth/login', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(values)
-      })
-      
-      const data = await response.json()
-      
-      if(response.ok){
-  
-        const { user, token } = data
-        dispatch({type: 'LOG_IN', payload: {token, user}})
-        localStorage.setItem('token', token)
 
-        navigate('/')
-      }
-  
-      setServerResponse(data)
-    } catch(error) {
-      setServerResponse({message: '¡Ups! Ha ocurrido un error...', type: 'danger'})
-    }
-  }
+  useEffect(()=>{
+    if(!auth) return
+    navigate(previusLocation)
+  }, [auth])
 
   return (
-    <div className='container' style={{height: '100vh'}}>
+    <div style={{height: '70vh'}}>
       <div className="row h-100 justify-content-center align-items-center">
         <div className="col-lg-6 col-md-9 col-sm-12 ">
           <div className="card">
@@ -68,7 +41,7 @@ const Login = ({dispatch}) => {
               <Formik
                 initialValues={{username: '', password: ''}}
                 validationSchema={signInSchema}
-                onSubmit={handleSubmit}
+                onSubmit={login}
               >
                 {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
                   <form onSubmit={handleSubmit}>
@@ -109,7 +82,7 @@ const Login = ({dispatch}) => {
                         <Loader />
                       </div>
                     }
-                    {serverResponse && !isSubmitting && <Alert message={serverResponse.message} type={serverResponse.type}/>}
+                    {authError && !isSubmitting && <Alert message={authError.message} type={authError.type}/>}
                   </form>
                 )}
               </Formik>
@@ -121,4 +94,6 @@ const Login = ({dispatch}) => {
   )
 }
 
-export default connect()(Login)
+const mapStateToProps = state => state.session
+
+export default connect(mapStateToProps, {login})(Login)

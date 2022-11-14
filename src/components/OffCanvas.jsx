@@ -32,7 +32,7 @@ export const OffCanvas = () => {
             <Link to='/degrees' className="nav-link">Carreras</Link>
           </li>
           <li className="nav-item">
-            <Link to='/users' className="nav-link">Usuarios</Link>
+            <Link to='/management' className="nav-link">Usuarios</Link>
           </li>
         </ul>
       </div>

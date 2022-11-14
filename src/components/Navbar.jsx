@@ -1,10 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+
 import Avatar from './Avatar'
 import { OffCanvasToggler } from './OffCanvas'
 
-const Navbar = ({user, token}) => {
+import { logout } from '../redux/actions/session'
+
+const Navbar = ({user, token, logout}) => {
   return (
     <nav className="navbar bg-light fixed-top w-100">
       <div className="container-fluid">
@@ -24,8 +27,23 @@ const Navbar = ({user, token}) => {
                   src={user.profile.avatar}
                 />
                 <ul className="dropdown-menu">
-                  <li className="dropdown-item">Mi perfil</li>
-                  <li className="dropdown-item">Cerrar sesión</li>
+                  <li className="dropdown-item">
+                    <Link 
+                      to='/profile/me' 
+                      className='text-reset text-decoration-none'
+                    >
+                      Mi perfil
+                    </Link>
+                  </li>
+                  <li className="dropdown-item">
+                    <Link 
+                      to='/' 
+                      className='text-reset text-decoration-none'
+                      onClick={logout}
+                    >
+                      Cerrar sesión
+                    </Link>
+                  </li>
                 </ul>
               </> : 
               <div className="nav">
@@ -41,4 +59,4 @@ const Navbar = ({user, token}) => {
 
 const mapStateToProps = state => state.session
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, {logout})(Navbar)
