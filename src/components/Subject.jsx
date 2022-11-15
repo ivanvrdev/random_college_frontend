@@ -5,30 +5,31 @@ import Avatar from './Avatar'
 
 import '../styles/banner.css'
 
-const Subject = ({header, image, path}) => {
+const Subject = ({_id, name, degrees, teachers, lessons_schedule, banner}) => {
+
   return (
     <div className="col-lg-3 col-md-4 col-sm-6">
       <div className='card mb-3'>
-        <Link to={path} className='text-decoration-none text-reset'>
-        <div className='card-avatar-container w-100'>
-          <div className="banner-container card-banner w-100">
-            <img
-              src={image} 
-              alt={header}
-              className="card-img-top card-banner"
-            />
-            <div className="ms-3 banner-text card-banner d-flex flex-column justify-content-evenly">
-              <p className='m-0 fs-5 text-light'>Materia</p>
-              <p className='m-0 text-light'>Carrera</p>
-              <p className='m-0 text-light'>Profesor</p>
+        <Link to={`/subjects/${_id}`} className='text-decoration-none text-reset'>
+          <div className='card-avatar-container w-100'>
+            <div className="banner-container card-banner w-100">
+              <img
+                src={banner || "https://gstatic.com/classroom/themes/img_read.jpg"} 
+                alt="banner"
+                className="card-img-top card-banner"
+              />
+              <div className="ms-3 banner-text card-banner d-flex flex-column justify-content-evenly">
+                <p className='m-0 fs-4 text-light'>{name}</p>
+                <p className='m-0 fs-6 text-light'>{degrees[0].name}</p>
+                <p className='m-0 fs-6 text-light'>
+                  {`${teachers[0].user.profile.first_name} ${teachers[0].user.profile.last_name}`}
+                </p>
+              </div>
             </div>
+            <Avatar className="card-avatar rounded-circle" src={teachers[0].user.profile.avatar}/>
           </div>
-          <Avatar className="card-avatar rounded-circle"/>
-        </div>
           <div className="card-body">
-            <p className="fs-6">
-              Próximo parcial
-            </p>
+            <p>{`${lessons_schedule[0].day}: ${lessons_schedule[0].start_hour} - ${lessons_schedule[0].end_hour}`}</p>
           </div>
         </Link>
       </div>

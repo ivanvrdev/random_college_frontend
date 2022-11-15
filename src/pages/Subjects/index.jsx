@@ -1,35 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { getSubjects } from '../../redux/actions/subjects'
+
 import Subject from '../../components/Subject'
 
-const Subjects = () => {
+const Subjects = ({userId, list, getSubjects}) => {
+  
+  useEffect(()=>{
+    getSubjects(userId)
+  }, [])
+  
   return (
     <div className="row">
-      <Subject 
-        header={'hola'} 
-        subHeader={'hola'} 
-        path={'/'} 
-        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
-      />
-      <Subject 
-        header={'hola'} 
-        subHeader={'hola'} 
-        path={'/'} 
-        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
-      />
-      <Subject 
-        header={'hola'} 
-        subHeader={'hola'} 
-        path={'/'} 
-        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
-      />
-      <Subject 
-        header={'hola'} 
-        subHeader={'hola'} 
-        path={'/'} 
-        image={'https://gstatic.com/classroom/themes/Honors.jpg'}
-      />
+      {list.map((subject, index)=> <Subject key={index} {...subject} />)}
     </div>
   )
 }
 
-export default Subjects
+const mapStateToProps = state => {
+  return {
+    userId: state.session.user._id,
+    list: state.subjects.list
+  }
+}
+
+export default connect(mapStateToProps, {getSubjects})(Subjects)

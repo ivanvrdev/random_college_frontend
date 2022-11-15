@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 import Home from './pages/Home'
 import Subjects from './pages/Subjects'
+import Subject from './pages/Subject'
 import Management from './pages/Management'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
@@ -33,7 +34,10 @@ const Router = ({auth}) => {
           <Route index element={<Management />} />
           <Route path='user/add' element={<CreateUser />} />
         </Route>
-        <Route path='/subjects' element={<Subjects />} />
+        <Route path='/subjects'>
+          <Route index element={<Subjects />} />
+          <Route path=':subjectId' element={<Subject />} /> 
+        </Route>
         <Route path='/profile'>
           <Route path=':username' element={<Profile />} />
           <Route path='me' element={<Profile />} />
