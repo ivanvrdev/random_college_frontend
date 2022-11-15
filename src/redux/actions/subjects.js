@@ -11,5 +11,5 @@ export const getSubjects = (userId, userType = 'student') => async dispatch => {
 }
 
 export const findSubject = (subjectId) => dispatch => {
-  dispatch({type: 'LOAD_SUBJECTS', payload: subjectId})
+  dispatch({type: 'FIND_SUBJECT', payload: subjectId})
 }

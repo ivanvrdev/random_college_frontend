@@ -5,7 +5,8 @@ import Banner from '../../components/Banner'
 
 const Subject = ({subject}) => {
   return (
-    <Banner header={'a'} subHeader={'b'}/>
+    // <Banner header={subject.name} subHeader={subject.degrees[0].name}/>
+    JSON.stringify(subject)
   )
 }
 

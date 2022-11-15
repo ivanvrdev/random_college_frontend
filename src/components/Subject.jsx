@@ -1,16 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Avatar from './Avatar'
 
+import { findSubject } from '../redux/actions/subjects'
+
 import '../styles/banner.css'
 
-const Subject = ({_id, name, degrees, teachers, lessons_schedule, banner}) => {
+const Subject = ({_id, name, degrees, teachers, lessons_schedule, banner, findSubject}) => {
 
   return (
     <div className="col-lg-3 col-md-4 col-sm-6">
       <div className='card mb-3'>
-        <Link to={`/subjects/${_id}`} className='text-decoration-none text-reset'>
+        <Link 
+          to={`/subjects/${_id}`} 
+          className='text-decoration-none text-reset' 
+          onClick={()=>{findSubject(_id)}}>
           <div className='card-avatar-container w-100'>
             <div className="banner-container card-banner w-100">
               <img
@@ -37,4 +43,6 @@ const Subject = ({_id, name, degrees, teachers, lessons_schedule, banner}) => {
   )
 }
 
-export default Subject
+const mapStateToProps = state => ({})
+
+export default connect(mapStateToProps, {findSubject})(Subject)
