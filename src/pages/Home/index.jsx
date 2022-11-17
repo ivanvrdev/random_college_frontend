@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+
+import PostInput from '../../components/PostInput'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <PostInput />
+
+    </div>
   )
 }
 
-export default Home
+export default connect()(Home)

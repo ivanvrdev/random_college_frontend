@@ -13,7 +13,8 @@ const subjectsReducer = (state = initialState, action) => {
       const selected = state.list.find(subject => subject._id === payload)
       return {...state, selected}
     },
-    'SELECT_SUBJECT': () => ({...state, selected: payload})
+    'SELECT_SUBJECT': () => ({...state, selected: payload}),
+    'LOAD_SELECTED_SUBJECT_POSTS': () => ({...state, selected: {...state.selected, posts: payload}})
   }
 
   return actions[type] ? actions[type]() : state
