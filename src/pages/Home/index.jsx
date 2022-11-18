@@ -2,14 +2,30 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import PostInput from '../../components/PostInput'
+import Post from '../../components/Post'
 
-const Home = () => {
+import { getGeneralPosts } from '../../redux/actions/posts'
+
+const Home = ({auth, posts, getGeneralPosts}) => {
+  
+  useEffect(()=>{
+    getGeneralPosts()
+  }, [])
+  
   return (
     <div>
-      <PostInput />
-
+      {auth && <PostInput />}
+      {
+        posts &&
+        posts.map((post, index) => <Post key={index} {...post} />)
+      }
     </div>
   )
 }
 
-export default connect()(Home)
+const mapStateToProps = state => ({
+  auth: state.session.auth,
+  posts: state.posts.list
+})
+
+export default connect(mapStateToProps, {getGeneralPosts})(Home)

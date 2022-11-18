@@ -12,7 +12,7 @@ export const getSubjectPosts = (subjectId) => async dispatch => {
 
 export const getGeneralPosts = () => async dispatch => {
   try {
-    const response = await axios.get(`/backend/post/list?type=público`)
+    const response = await axios.get(`/backend/public/post`)
 
     dispatch({type: 'LOAD_POSTS', payload: [...response.data.posts]})
   } catch(error) {
