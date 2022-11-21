@@ -21,8 +21,12 @@ const Management = ({list, getUsers}) => {
       </div>
       {
         list.length > 0 &&      
-        <ul className="list-group list-group-flush">
-          {list.map((user, index) => <User key={index} {...user} />)}
+        <ul className="list-group list-group mt-3">
+          {list.map((user, index) =>
+            <Link key={index} to={`/profile/${user.username}`} className='text-reset text-decoration-none'>
+              <User {...user} />
+            </Link>
+          )}
         </ul>
       }
     </div>

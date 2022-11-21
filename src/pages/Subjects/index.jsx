@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getSubjects } from '../../redux/actions/subjects'
 
-import Subject from '../../components/Subject'
+import Subject from './components/Subject'
 
 const Subjects = ({userId, list, getSubjects}) => {
   

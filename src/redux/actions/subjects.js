@@ -24,3 +24,7 @@ export const getSubjectById = (subjectId) => async dispatch => {
     console.log(error)
   }
 }
+
+export const findStudentData = (userId) => dispatch => {
+  dispatch({type: 'FIND_STUDENT_DATA', payload: userId})
+}

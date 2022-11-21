@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import Avatar from './Avatar'
+import Avatar from '../../../components/Avatar'
 
-import { findSubject } from '../redux/actions/subjects'
+import { findSubject } from '../../../redux/actions/subjects'
 
-import '../styles/banner.css'
+import '../../../styles/banner.css'
 
 const Subject = ({_id, name, degrees, teachers, lessons_schedule, banner, findSubject}) => {
 

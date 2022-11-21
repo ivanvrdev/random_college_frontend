@@ -28,12 +28,12 @@ export const OffCanvas = () => {
           <li className="nav-item">
             <Link to='/subjects' className="nav-link">Materias</Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to='/degrees' className="nav-link">Carreras</Link>
           </li>
           <li className="nav-item">
             <Link to='/management' className="nav-link">Usuarios</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

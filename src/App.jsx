@@ -13,6 +13,8 @@ import Management from './pages/Management'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
 import CreateUser from './pages/Management/components/CreateUser'
+import Users from './pages/Users'
+import Grades from './pages/Grades'
 
 import ProtectedRoutes from './components/ProtectedRoutes'
 import Navbar from './components/Navbar'
@@ -36,10 +38,14 @@ const Router = ({auth}) => {
         </Route>
         <Route path='/subjects'>
           <Route index element={<Subjects />} />
-          <Route path=':subjectId' element={<Subject />} /> 
+          <Route path=':subjectId'>
+            <Route index element={<Subject />} />
+            <Route path='users' element={<Users />} />
+            <Route path='grades' element={<Grades />} />
+          </Route>
         </Route>
         <Route path='/profile'>
-          <Route path=':username' element={<Profile />} />
+          {/* <Route path=':username' element={<Profile />} /> */}
           <Route path='me' element={<Profile />} />
         </Route>
       </Route>

@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import Avatar from "./Avatar"
+
+import { createPost } from '../redux/actions/posts'
 
 const createPostSchema = Yup.object().shape({
   header: Yup.string()
@@ -16,18 +19,27 @@ const createPostSchema = Yup.object().shape({
   .max(200, 'Demasiado largo')
 })
 
-const PostInput = ({sessionAvatar, userId}) => {
-  
+const PostInput = ({sessionAvatar, userId, postResponse, createPost}) => {
+
+  const location = useLocation()
+  const { subjectId } = useParams()
+
   const [ showForm, setShowForm ] = useState(false)
   
   const handleSubmit = ({header, description}) => {
     const body = {
       author: userId,
-      content: {header, description}
+      content: {header, description},
+      type: location.pathname === '/' ? "público" : "privado",
+      classroom: subjectId || null
     }
-
-    console.log(body)
+    createPost(body)
   }
+
+  useEffect(()=>{
+    if(!postResponse) return
+    setShowForm(false)
+  }, [postResponse])
 
   return (
     <div className="my-2">
@@ -107,7 +119,8 @@ const PostInput = ({sessionAvatar, userId}) => {
 
 const mapStateToProps = state => ({
   sessionAvatar: state.session.user.profile.avatar,
-  userId: state.session.user._id
+  userId: state.session.user._id,
+  postResponse: state.posts.postResponse
 })
 
-export default connect(mapStateToProps)(PostInput)
+export default connect(mapStateToProps, {createPost})(PostInput)

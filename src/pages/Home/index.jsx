@@ -4,14 +4,32 @@ import { connect } from 'react-redux'
 import PostInput from '../../components/PostInput'
 import Post from '../../components/Post'
 
-import { getGeneralPosts } from '../../redux/actions/posts'
+import { getGeneralPosts, clearResponse } from '../../redux/actions/posts'
 
-const Home = ({auth, posts, getGeneralPosts}) => {
+const Home = ({auth, posts, getGeneralPosts, postResponse, commentResponse, clearResponse}) => {
   
   useEffect(()=>{
     getGeneralPosts()
   }, [])
   
+  useEffect(()=>{
+    if(!postResponse) return
+
+    if(postResponse.type !== 'success') return
+
+    getGeneralPosts()
+    clearResponse()
+  }, [postResponse])
+
+  useEffect(()=>{
+    if(!commentResponse) return
+
+    if(commentResponse.type !== 'success') return
+
+    getGeneralPosts()
+    clearResponse()
+  }, [commentResponse])
+
   return (
     <div>
       {auth && <PostInput />}
@@ -25,7 +43,9 @@ const Home = ({auth, posts, getGeneralPosts}) => {
 
 const mapStateToProps = state => ({
   auth: state.session.auth,
-  posts: state.posts.list
+  posts: state.posts.list,
+  postResponse: state.posts.postResponse,
+  commentResponse: state.posts.commentResponse,
 })
 
-export default connect(mapStateToProps, {getGeneralPosts})(Home)
+export default connect(mapStateToProps, {getGeneralPosts, clearResponse})(Home)
