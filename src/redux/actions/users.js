@@ -52,20 +52,23 @@ export const createUser = (values) => async dispatch => {
   // }
 }
 
-export const updateUserProfile = (values, userId) => async dispatch =>{
+export const updateUserProfile = (values, avatar, userId) => async dispatch =>{
   try {
-    const body = JSON.stringify({profile: values})
-
+    
     const config = {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       }
     }
 
-    const response = await axios.put(`/backend/user/update/${userId}`, body, config)
+    const form = new FormData()
+
+    if(avatar) form.append("avatar", avatar)
+    const profile = JSON.stringify({...values})
+    form.append("profile", profile)
+    const response = await axios.put(`/backend/user/update/${userId}`, form, config)
 
     dispatch({type: 'UPDATE_MY_USER', payload: response.data})
-
   } catch (error) {
     console.log(error)
   }

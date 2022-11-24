@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 
-import Alert from '../../../components/Alert'
+import Loader from '../../../components/Loader'
 import Avatar from '../../../components/Avatar'
 
 import { updateUserProfile, clearUpdatedMessage } from '../../../redux/actions/users'
@@ -77,11 +77,10 @@ const PersonalForm = ({userId, profile, updatedMessage, updateUserProfile, clear
                 sex
               }}
               onSubmit={(values) => {
+                
                 const body = {...profile, ...values}
-
-                if(selectedFile) body.newAvatar = selectedFile
-
-                updateUserProfile(body, userId)
+                
+                updateUserProfile(body, selectedFile, userId)
               }}
             >
               {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
@@ -89,7 +88,7 @@ const PersonalForm = ({userId, profile, updatedMessage, updateUserProfile, clear
                   <div className="row">
                     <div className="col-md-6 col-sm-12">
                       <div className="d-flex justify-content-center">
-                        <Avatar src={preview || avatar} width={100} height={100}/>
+                        <Avatar src={preview || avatar} width={150} height={150}/>
                       </div>
                       <Input 
                         name="avatar" 
@@ -160,11 +159,14 @@ const PersonalForm = ({userId, profile, updatedMessage, updateUserProfile, clear
                     <Link to="/management" className="btn btn-secondary">
                       Cancelar
                     </Link>
-                    <button type="submit" className="btn btn-primary">
-                      Enviar
-                    </button>
+                    {
+                      isSubmitting ? 
+                      <Loader /> :
+                      <button type="submit" className="btn btn-primary">
+                        Enviar
+                      </button>
+                    }
                   </div>
-                  {/* <Alert message='hola' type='success' /> */}
                 </form>
               )}
             </Formik>
