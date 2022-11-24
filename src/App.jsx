@@ -15,6 +15,7 @@ import Login from './pages/Login'
 import CreateUser from './pages/Management/components/CreateUser'
 import Users from './pages/Users'
 import Grades from './pages/Grades'
+import UpdateProfile from './pages/UpdateProfile'
 
 import ProtectedRoutes from './components/ProtectedRoutes'
 import Navbar from './components/Navbar'
@@ -46,7 +47,10 @@ const Router = ({auth}) => {
         </Route>
         <Route path='/profile'>
           {/* <Route path=':username' element={<Profile />} /> */}
-          <Route path='me' element={<Profile />} />
+          <Route path='me'>
+            <Route index element={<Profile />}/>
+            <Route path='update' element={<UpdateProfile />}/>
+          </Route>
         </Route>
       </Route>
     </Routes>

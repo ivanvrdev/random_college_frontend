@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 // import { findUser, getUserByUsername } from '../../redux/actions/users'
 
@@ -15,7 +16,10 @@ const Profile = ({sessionUser}) => {
     <>
       <div className='card mb-3'>
         <div className="card-body">
-          <p className='fs-3 fw-semibold'>Información personal</p>
+          <div className="d-flex justify-content-between">
+            <p className='fs-3 fw-semibold mb-0'>Información personal</p>
+            <Link to='update' className='btn btn-primary'>Editar</Link>
+          </div>
           <ul className="list-group list-group-flush">
             <li className='list-group-item d-flex justify-content-between align-items-center'>
               <p className='mb-0'>Foto de perfil</p>
